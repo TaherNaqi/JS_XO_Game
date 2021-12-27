@@ -2,9 +2,18 @@
 // First button top left is called 1, last button bottom right is 9
 // turn to alternate between X and O
 let turn = 0;
+// Filling button with X or O and increasing the turn counter if the operation is successful
 function fillButton(index, text) {
   // This function fills
-  document.getElementById(index).innerHTML = text;
+  if (
+    document.getElementById(index).innerHTML == "X" ||
+    document.getElementById(index).innerHTML == "O"
+  ) {
+    alert(`invalid input`);
+  } else {
+    document.getElementById(index).innerHTML = text;
+    turn++;
+  }
 }
 
 // SAMPLE CODE: This code fills the 1st and 9th button with X and O initially
@@ -21,10 +30,12 @@ function fillButton(index, text) {
  */
 function clickButton(index) {
   console.log(`Button number ${index} is clicked`);
-  fillButton(index, checkPlayer());
-  turn++;
-  checkWinner(index);
-  if (turn == 9) {
+
+  if (turn <= 8) {
+    fillButton(index, checkPlayer());
+    checkWinner();
+  } else {
+    alert(`It is a draw`);
     restartGame();
   }
 }
@@ -125,5 +136,5 @@ function restartGame() {
 // premade a function. You can use this function to present an alert to say somene wins
 function winningAlert(winner) {
   alert(`Horraaay, ${winner} wins!`);
-  location.reload();
+  restartGame();
 }
